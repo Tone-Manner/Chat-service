@@ -17,14 +17,15 @@ public class ChatRoomService {
 
     // 1. 대화창 생성 로직 (유저 서비스 통신 포함)
     @Transactional
-    public ChatRoom createRoom(String token, String email) {
+    public ChatRoom createRoom(String token, String email, String relation) {
 
         // 유저 서비스에 방 만들어도 되는지 물어보기
         // 만약 4개 다 썼다면 여기서 FeignException(403)이 발생 하면서 아래 방 생성 로직은 실행 안 됨.
         userServiceClient.useChatRoom(token);
 
         // 통과 시 방 생성
-        ChatRoom room = new ChatRoom(email, "새로운 대화창");
+        String title = relation + "와의 대화창";
+        ChatRoom room = new ChatRoom(email, title, relation);
         return chatRoomRepository.save(room);
     }
 

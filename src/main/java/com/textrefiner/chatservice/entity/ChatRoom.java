@@ -14,13 +14,15 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String userEmail; // 이 방의 주인!
+    private String userEmail;
     private String title;     // 방 제목 (예: "새로운 대화창")
+    private String relation; // 대상 (예: 직장 상사)
     private LocalDateTime createdAt;
 
-    public ChatRoom(String userEmail, String title) {
+    public ChatRoom(String userEmail, String title, String relation) {
         this.userEmail = userEmail;
         this.title = title;
+        this.relation = relation;
         this.createdAt = LocalDateTime.now();
     }
 }

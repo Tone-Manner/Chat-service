@@ -1,5 +1,6 @@
 package com.textrefiner.chatservice.controller;
 
+import com.textrefiner.chatservice.dto.ChatRoomCreateRequest;
 import com.textrefiner.chatservice.entity.ChatRoom;
 import com.textrefiner.chatservice.service.ChatRoomService;
 import com.textrefiner.chatservice.util.JwtParser;
@@ -18,9 +19,14 @@ public class ChatRoomController {
 
     // 1. 방 생성 API
     @PostMapping
-    public ResponseEntity<ChatRoom> createRoom(@RequestHeader("Authorization") String token) {
+    public ResponseEntity<ChatRoom> createRoom(
+            @RequestHeader("Authorization") String token,
+            @RequestBody ChatRoomCreateRequest request) {
+
         String email = jwtParser.extractEmail(token);
-        ChatRoom room = chatRoomService.createRoom(token, email);
+
+        ChatRoom room = chatRoomService.createRoom(token, email, request.getRelation());
+
         return ResponseEntity.ok(room);
     }
 
